@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="difficulty">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="database">
+        <item>题库1</item>
+        <item>题库2</item>
+        <item>题库3</item>
+    </string-array>
+    <string-array name="department">
+        <item>部门1</item>
+        <item>部门2</item>
+        <item>部门3</item>
+    </string-array>
+</resources>

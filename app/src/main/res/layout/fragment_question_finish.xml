@@ -1,0 +1,31 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="Fragment.QuestionFinishFragment">
+
+    <include
+        android:id="@+id/question_answer"
+        layout="@layout/toolbar"/>
+
+    <Button
+        android:id="@+id/submit_question"
+        android:layout_alignParentBottom="true"
+        android:text="@string/finish_exam"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ListView
+        android:id="@+id/your_answer"
+        android:gravity="center"
+        android:layout_above="@id/submit_question"
+        android:layout_below="@id/question_answer"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:divider="@drawable/list_divider"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+</RelativeLayout>

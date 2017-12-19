@@ -1,0 +1,27 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/loginColor</item>
+        <item name="colorPrimaryDark">@color/loginColor</item>
+        <item name="colorAccent">@color/loginColor</item>
+    </style>
+    <style name="login_error">
+        <item name="android:textColor">@color/errorColor</item>
+        <item name="android:textSize">8sp</item>
+    </style>
+    <style name="register_error">
+        <item name="android:textColor">@color/errorColor</item>
+        <item name="android:textSize">8sp</item>
+    </style>
+    <style name="tabLayout_textAppearance" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+    <style name="login_register_top">
+        <item name="android:textSize">44sp</item>
+        <item name="android:textColor">@color/login_registerTopColor</item>
+    </style>
+
+</resources>

@@ -1,0 +1,17 @@
+package Internet;
+
+import io.reactivex.Observable;
+import model.SuggestionResponse;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
+
+/**
+ * Created by SEUXXD on 2017/12/9.
+ */
+
+public interface SuggestionService {
+    @GET()
+    Observable<SuggestionResponse> submitSuggestion(@Query("title") String title,
+                                                    @Query("content") String content,
+                                                    @Query("username") String username);
+}

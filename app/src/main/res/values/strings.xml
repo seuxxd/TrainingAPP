@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name">互联网+在线培训</string>
+    <string name="top_name">培训</string>
+    <string name="department">部门选择</string>
+    <string name="login_username">请输入登录用户名</string>
+    <string name="register_username">请填写创建的用户名</string>
+    <string name="login_password">请输入登录密码</string>
+    <string name="register_password">请创建密码</string>
+    <string name="register_password_2">请再次输入密码确认</string>
+    <string name="register_phoneNumber">请输入联系电话</string>
+    <string name="do_register">点击注册</string>
+    <string name="do_login">登录</string>
+    <string name="login">登录账号</string>
+    <string name="register">点击注册</string>
+    <string name="scan_info_title">扫描设备二维码</string>
+    <string name="initial_pwd">请输入原密码</string>
+    <string name="first_change_pwd">请输入新密码</string>
+    <string name="second_change_pwd">再输入一次确定</string>
+    <string name="change_phone_number">请输入新手机号码</string>
+    <string name="forget_pwd">忘记密码</string>
+    <string name="store_info">保存密码</string>
+    <string name="initial_username">请输入原用户名</string>
+    <string name="initial_number">请输入原手机号码</string>
+    <string name="new_pwd1">请输入新密码</string>
+    <string name="new_pwd2">请确定输入新密码</string>
+    <string name="question_title">题目</string>
+    <string name="difficulty_choose">难度选择</string>
+    <string name="database_choose">题库选择</string>
+    <string name="start_exam">开始考试</string>
+    <string name="finish_exam">结束考试并提交成绩</string>
+    <string name="scan_image">扫码标志</string>
+    <string name="answer_image">答案标志</string>
+    <string name="news_top">新闻资讯</string>
+    <string name="news_more">获取更多</string>
+    <string name="suggestion_abstract">建议简述</string>
+    <string name="suggestion_detail">详细建议</string>
+    <string name="submit_detail">提交建议</string>
+    <string name="interest">关注热点</string>
+
+    
+    <string name="rules">规则规章</string>
+    <string name="video">视频课件</string>
+    <string name="powerpoint">文档课件</string>
+    <string name="malfunction">典型故障</string>
+
+    <string name="pdf_empty_list">无文档数据</string>
+    <string name="video_empty_list">无视频数据</string>
+
+    <string name="equip_id">设备ID:</string>
+    <string name="equip_name">设备名:</string>
+    <string name="equip_model">设备模型:</string>
+    <string name="equip_function">设备功能:</string>
+    <string name="equip_maker">设备制造商:</string>
+
+    <string name="class_one">分类一</string>
+    <string name="class_two">分类二</string>
+    <string name="class_three">分类三</string>
+    <string name="class_four">分类四</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="equip_info_detail">设备详细信息</string>
+</resources>
