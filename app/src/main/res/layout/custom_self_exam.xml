@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/choose_difficulty_layout"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/distance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/exam_choose_text"
+            android:text="@string/difficulty_choose"
+            android:gravity="center"
+            android:textColor="@color/tabSelecterColor"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="30dp"/>
+        <Spinner
+            android:id="@+id/difficulty_choose"
+            android:spinnerMode="dropdown"
+            android:entries="@array/difficulty"
+            android:gravity="center"
+            android:overScrollMode="never"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="30dp">
+        </Spinner>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/choose_database_layout"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/distance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/database_choose_text"
+            android:text="@string/database_choose"
+            android:gravity="center"
+            android:textColor="@color/tabSelecterColor"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="30dp"/>
+        <Spinner
+            android:id="@+id/database_choose"
+            android:spinnerMode="dropdown"
+            android:entries="@array/database"
+            android:gravity="center"
+            android:overScrollMode="never"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="30dp">
+        </Spinner>
+    </LinearLayout>
+</LinearLayout>

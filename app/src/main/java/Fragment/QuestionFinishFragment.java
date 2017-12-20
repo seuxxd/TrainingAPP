@@ -39,6 +39,7 @@ import java.util.List;
 import Adapter.AnswerAdapter;
 import Constant.URLConstant;
 import Internet.ExamResultService;
+import Internet.ExamSpecialService;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -48,6 +49,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import model.ExamResponse;
 import model.FifthAnswer;
 import model.ScoreSubmitResponse;
 import okhttp3.ResponseBody;
@@ -61,6 +63,7 @@ public class QuestionFinishFragment extends Fragment {
 
 
     private Intent mIntent;
+    private int mType;
 
 
     private List<Integer> mDrawables;
@@ -72,6 +75,12 @@ public class QuestionFinishFragment extends Fragment {
 
 
     private AnswerAdapter mAdapter;
+    private Retrofit mRetrofit =
+            new Retrofit.Builder()
+                    .baseUrl(URLConstant.BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .build();
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onChange(FifthAnswer mAnswer){
@@ -92,129 +101,10 @@ public class QuestionFinishFragment extends Fragment {
     public void onSubmit(){
         if (mIntent == null)
             return;
-        int mCount = 0;
-        String mResult = "";
-        SharedPreferences mPreferences = getActivity()
-                .getSharedPreferences("answer", Context.MODE_PRIVATE);
-        mRightAnswers = new ArrayList<>();
-        mResultColors = new ArrayList<>();
-        for (int i = 1 ; i <= 5 ; i ++){
 
-            String mRealAnswer = mPreferences.getString("right"+i,"B").toUpperCase();
-            String mYourAnswer = mPreferences.getString(String.valueOf(i),"A").toUpperCase();
-            Log.i(TAG, "onSubmit: real" + mRealAnswer);
-            Log.i(TAG, "onSubmit: your" + mYourAnswer);
-            if (mRealAnswer.equals(mYourAnswer)){
-                mCount ++;
-                Log.i(TAG, "onSubmit: " + mCount);
-                mRightAnswers.add(mRealAnswer);
-                mResultColors.add(1);
-            }
-            else{
-                mRightAnswers.add(mRealAnswer);
-                mResultColors.add(2);
-            }
 
-        }
-        final int mDatabase = mPreferences.getInt("database",0);
-        final int mDifficulty = mPreferences.getInt("difficulty",0);
-        Calendar mCalendar = Calendar.getInstance();
-        String mYear  = String.valueOf(mCalendar.get(Calendar.YEAR));
-        String mMonth,mDay;
-        int month = mCalendar.get(Calendar.MONTH)+1;
-        if (month < 10)
-            mMonth = "0"+month;
-        else
-            mMonth = String.valueOf(month);
-        int day = mCalendar.get(Calendar.DAY_OF_MONTH);
-        if (day < 10)
-            mDay = "0" + day;
-        else
-            mDay   = String.valueOf(day);
-        final String mDataFormat = mYear + "-" + mMonth + "-" + mDay;
-        mPreferences = getActivity()
-                .getSharedPreferences("user", Context.MODE_PRIVATE);
-        final String mUsername = mPreferences.getString("userName","");
-        final int mScore = mCount * 20;
-        String mScoreResult = "";
-        switch (mScore){
-            case 100:
-                mScoreResult = "满分，学得不错，继续努力！";
-                break;
-            case 80:
-                mScoreResult = "80分，再认真一点，继续努力！";
-                break;
-            case 60:
-            case 40:
-            case 20:
-            case 0:
-                mScoreResult = mScore + "分，同志仍需努力！";
-                break;
-            default:
-                mScoreResult = "继续努力！";
-                break;
-        }
-        Log.i(TAG, "onSubmit: 成绩" + mScore);
-        AlertDialog mDialog = new AlertDialog.Builder(getContext())
-                .setTitle("最终成绩")
-                .setMessage(mScoreResult)
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Retrofit mRetrofit = new Retrofit.Builder()
-                                .baseUrl(URLConstant.BASE_URL)
-                                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                                .addConverterFactory(GsonConverterFactory.create())
-                                .build();
-                        ExamResultService mExamResultService = mRetrofit.create(ExamResultService.class);
-                        Observable<ScoreSubmitResponse> mExamResultObservable = mExamResultService.uploadResult(
-                                mUsername,
-                                String.valueOf(mScore),
-                                mDataFormat,
-                                String.valueOf(mDatabase),
-                                String.valueOf(mDifficulty));
-                        mExamResultObservable
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Observer<ScoreSubmitResponse>() {
-                                    @Override
-                                    public void onSubscribe(@NonNull Disposable d) {
-                                        Log.i(TAG, "onSubscribe: 订阅成功");
-                                    }
 
-                                    @Override
-                                    public void onNext(@NonNull ScoreSubmitResponse responseBody) {
-                                        if (responseBody.isSuccess()){
-                                            Toast.makeText(getContext(), "成绩已提交成功", Toast.LENGTH_SHORT).show();
-//                                            在这里展示具体题目的正确和错误
-                                            mAdapter = new AnswerAdapter(
-                                                    mAnswers,
-                                                    mResultColors,
-                                                    getContext(),
-                                                    mDrawables,
-                                                    mRightAnswers
-                                                    );
-                                            mAdapter.notifyDataSetChanged();
-                                            mAnswerList.setAdapter(mAdapter);
 
-                                        }
-                                        else
-                                            Toast.makeText(getContext(), "成绩提交失败", Toast.LENGTH_SHORT).show();
-                                    }
-
-                                    @Override
-                                    public void onError(@NonNull Throwable e) {
-                                        e.printStackTrace();
-                                    }
-
-                                    @Override
-                                    public void onComplete() {
-
-                                    }
-                                });
-                    }
-                })
-                .show();
 
     }
 
@@ -260,6 +150,7 @@ public class QuestionFinishFragment extends Fragment {
         mAdapter = new AnswerAdapter(getContext(),mAnswers,mDrawables);
         mAnswerList.setDividerHeight(5);
         mAnswerList.setAdapter(mAdapter);
+        mType = getActivity().getIntent().getIntExtra("type",0);
         return mLayout;
     }
 
@@ -289,5 +180,146 @@ public class QuestionFinishFragment extends Fragment {
         String mAnswer = mPreferences.getString("5","");
         mAnswers.add(4,mAnswer);
         mAdapter.notifyDataSetChanged();
+    }
+
+
+    /**
+     *
+     * @param type the type of whether upload score
+     */
+    private void checkAnswer(int type){
+        int mCount = 0;
+        String mResult = "";
+        SharedPreferences mPreferences = getActivity()
+                .getSharedPreferences("answer", Context.MODE_PRIVATE);
+        mRightAnswers = new ArrayList<>();
+        mResultColors = new ArrayList<>();
+        for (int i = 1 ; i <= 5 ; i ++){
+
+            String mRealAnswer = mPreferences.getString("right"+i,"B").toUpperCase();
+            String mYourAnswer = mPreferences.getString(String.valueOf(i),"A").toUpperCase();
+            Log.i(TAG, "onSubmit: real" + mRealAnswer);
+            Log.i(TAG, "onSubmit: your" + mYourAnswer);
+            if (mRealAnswer.equals(mYourAnswer)){
+                mCount ++;
+                Log.i(TAG, "onSubmit: " + mCount);
+                mRightAnswers.add(mRealAnswer);
+                mResultColors.add(1);
+            }
+            else{
+                mRightAnswers.add(mRealAnswer);
+                mResultColors.add(2);
+            }
+        }
+        final int mScore = mCount * 20;
+        String mScoreResult = "";
+        switch (mScore){
+            case 100:
+                mScoreResult = "满分，学得不错，继续努力！";
+                break;
+            case 80:
+                mScoreResult = "80分，再认真一点，继续努力！";
+                break;
+            case 60:
+            case 40:
+            case 20:
+            case 0:
+                mScoreResult = mScore + "分，同志仍需努力！";
+                break;
+            default:
+                mScoreResult = "继续努力！";
+                break;
+        }
+        Log.i(TAG, "onSubmit: 成绩" + mScore);
+
+        AlertDialog mDialog;
+        switch (type){
+            case 0://自评
+                mDialog = new AlertDialog.Builder(getContext())
+                        .setTitle("自测最终成绩")
+                        .setMessage(mScoreResult)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+//                                do nothing
+                            }
+                        })
+                        .show();
+                break;
+            case 1://考试
+                final int mDatabase = mPreferences.getInt("database",0);
+                final int mDifficulty = mPreferences.getInt("difficulty",0);
+                mPreferences = getActivity()
+                        .getSharedPreferences("user", Context.MODE_PRIVATE);
+                final String mUsername = mPreferences.getString("userName","");
+                final String mTimeFormat = getTimeFormat();
+                mDialog = new AlertDialog.Builder(getContext())
+                        .setTitle("培训测试成绩")
+                        .setMessage(mScoreResult)
+                        .setPositiveButton("提交成绩", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ExamResultService mService = mRetrofit.create(ExamResultService.class);
+                                Observable<ScoreSubmitResponse> mObservable = mService.uploadResult(
+                                        mUsername,
+                                        String.valueOf(mScore),
+                                        mTimeFormat,
+                                        String.valueOf(mDatabase),
+                                        String.valueOf(mDifficulty));
+                                mObservable
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(new Observer<ScoreSubmitResponse>() {
+                                            @Override
+                                            public void onSubscribe(@NonNull Disposable d) {
+                                                Log.i(TAG, "onSubscribe: 培训考试上传成绩订阅成功");
+                                            }
+
+                                            @Override
+                                            public void onNext(@NonNull ScoreSubmitResponse scoreSubmitResponse) {
+                                                if (scoreSubmitResponse.isSuccess()){
+                                                    Toast.makeText(getContext(), "上传成功", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onError(@NonNull Throwable e) {
+                                                e.printStackTrace();
+                                            }
+
+                                            @Override
+                                            public void onComplete() {
+
+                                            }
+                                        });
+                            }
+                        })
+                        .setNegativeButton("取消提交", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+//                                do nothing
+                            }
+                        })
+                        .show();
+                break;
+            default://默认
+                break;
+        }
+    }
+    private String getTimeFormat(){
+        Calendar mCalendar = Calendar.getInstance();
+        String mYear  = String.valueOf(mCalendar.get(Calendar.YEAR));
+        String mMonth,mDay;
+        int month = mCalendar.get(Calendar.MONTH)+1;
+        if (month < 10)
+            mMonth = "0"+month;
+        else
+            mMonth = String.valueOf(month);
+        int day = mCalendar.get(Calendar.DAY_OF_MONTH);
+        if (day < 10)
+            mDay = "0" + day;
+        else
+            mDay   = String.valueOf(day);
+        return mYear + "-" + mMonth + "-" + mDay;
     }
 }

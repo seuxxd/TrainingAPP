@@ -10,8 +10,8 @@
         android:id="@+id/scan_icon"
         android:src="@drawable/equip_scan"
         android:layout_gravity="center"
-        android:layout_width="239dp"
-        android:layout_height="175dp"/>
+        android:layout_width="200dp"
+        android:layout_height="146dp"/>
 
     <TextView
         android:id="@+id/scan_info_title"

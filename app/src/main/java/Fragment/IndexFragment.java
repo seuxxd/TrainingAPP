@@ -13,10 +13,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewAnimator;
 
+import com.bumptech.glide.Glide;
 import com.example.seuxxd.trainingapp.MessageActivity;
 import com.example.seuxxd.trainingapp.NewsActivity;
 import com.example.seuxxd.trainingapp.R;
@@ -27,12 +29,14 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
 import Constant.URLConstant;
+import Internet.DayImageService;
 import Internet.MessageService;
 import Internet.NewsService;
 import butterknife.BindView;
@@ -50,6 +54,7 @@ import model.MessageDetails;
 import model.MessageResponse;
 import model.NewsDetail;
 import model.NewsResponse;
+import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -74,6 +79,9 @@ public class IndexFragment extends Fragment {
     private static final String TAG = "IndexFragment";
 
 
+    @BindView(R.id.day_image)
+    ImageView mDayImage;
+
     @BindView(R.id.training_notification)
     TextView mNotificationText;
     @OnClick(R.id.training_notification)
@@ -92,8 +100,8 @@ public class IndexFragment extends Fragment {
 
     @BindView(R.id.news_show)
     MarqueeView mMarqueeView;
-    @BindView(R.id.index_like)
-    JZVideoPlayerStandard mPlayer;
+//    @BindView(R.id.index_like)
+//    JZVideoPlayerStandard mPlayer;
 
     public IndexFragment() {
         // Required empty public constructor
@@ -127,14 +135,51 @@ public class IndexFragment extends Fragment {
                              Bundle savedInstanceState) {
         View mLayout = inflater.inflate(R.layout.fragment_index,container,false);
         ButterKnife.bind(this,mLayout);
+        getDayImage();
         getNews();
         getNotifications();
         String url = "http://www.jmzsjy.com/UploadFile/微课/地方风味小吃——宫廷香酥牛肉饼.mp4";
-        mPlayer.setUp(url, JZVideoPlayer.SCREEN_WINDOW_FULLSCREEN,"兴趣");
+//        mPlayer.setUp(url, JZVideoPlayer.SCREEN_WINDOW_FULLSCREEN,"兴趣");
         Log.i(TAG, "onCreateView: 创建视图");
         return mLayout;
     }
 
+    private void getDayImage(){
+        String url = "http://guolin.tech/api/bing_pic";
+        DayImageService mService = mRetrofit.create(DayImageService.class);
+        Observable<ResponseBody> mObservable = mService.getDayImage();
+        mObservable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseBody>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        Log.i(TAG, "onSubscribe: 图片订阅成功");
+                    }
+
+                    @Override
+                    public void onNext(@NonNull ResponseBody responseBody) {
+                        try {
+                            String mImageUrl = responseBody.string();
+                            Log.i(TAG, "onNext: " + mImageUrl);
+                            Glide.with(getContext()).load(mImageUrl).into(mDayImage);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+    }
 
     /**
      * 这个是获取推送信息的函数

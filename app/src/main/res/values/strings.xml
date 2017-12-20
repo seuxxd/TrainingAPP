@@ -26,7 +26,8 @@
     <string name="question_title">题目</string>
     <string name="difficulty_choose">难度选择</string>
     <string name="database_choose">题库选择</string>
-    <string name="start_exam">开始考试</string>
+    <string name="self_exam">开始自评</string>
+    <string name="start_exam">培训考试</string>
     <string name="finish_exam">结束考试并提交成绩</string>
     <string name="scan_image">扫码标志</string>
     <string name="answer_image">答案标志</string>
@@ -42,6 +43,8 @@
     <string name="video">视频课件</string>
     <string name="powerpoint">文档课件</string>
     <string name="malfunction">典型故障</string>
+    <string name="sign">快捷签到</string>
+    <string name="suggestion">意见与建议</string>
 
     <string name="pdf_empty_list">无文档数据</string>
     <string name="video_empty_list">无视频数据</string>
