@@ -24,6 +24,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.seuxxd.trainingapp.MainActivity;
 import com.example.seuxxd.trainingapp.R;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
@@ -102,7 +103,11 @@ public class QuestionFinishFragment extends Fragment {
         if (mIntent == null)
             return;
 
-
+        mType = getActivity()
+                .getSharedPreferences("answer",Context.MODE_PRIVATE)
+                .getInt("type",2);
+        checkAnswer(mType);
+        Log.i(TAG, "onSubmit: type " + mType);
 
 
 
@@ -150,7 +155,10 @@ public class QuestionFinishFragment extends Fragment {
         mAdapter = new AnswerAdapter(getContext(),mAnswers,mDrawables);
         mAnswerList.setDividerHeight(5);
         mAnswerList.setAdapter(mAdapter);
-        mType = getActivity().getIntent().getIntExtra("type",0);
+        mType = getActivity()
+                .getSharedPreferences("answer",Context.MODE_PRIVATE)
+                .getInt("type",2);
+        Log.i(TAG, "onCreateView: type " + mType);
         return mLayout;
     }
 
@@ -300,7 +308,11 @@ public class QuestionFinishFragment extends Fragment {
 //                                do nothing
                             }
                         })
-                        .show();
+                        .create();
+                mDialog.show();
+                break;
+            case 2:
+                Log.i(TAG, "checkAnswer: 无效ID");
                 break;
             default://默认
                 break;

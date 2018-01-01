@@ -48,10 +48,6 @@ public class PersonDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.person_details_title)
     Toolbar mPersonToolBar;
-    @BindView(R.id.toolbar_icon)
-    ImageView mPersonIcon;
-    @BindView(R.id.toolbar_text)
-    TextView mPersonName;
     @BindView(R.id.person_details_list)
     ListView mDetailsList;
 
@@ -77,8 +73,10 @@ public class PersonDetailsActivity extends AppCompatActivity {
                 .getString("password","");
         final String mPhoneNumber = getSharedPreferences("user",Context.MODE_PRIVATE)
                 .getString("phoneNumber","");
-        mPersonToolBar.setTitle("");
-        mPersonName.setText("您好！" + mUsername);
+        mPersonToolBar.setTitle("您好！" + mUsername);
+        mPersonToolBar.setBackgroundResource(R.color.loginColor);
+        setSupportActionBar(mPersonToolBar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         String[] str = {mUsername,mPassword,mPhoneNumber};
         final int[] ints = {R.drawable.me,R.drawable.setting,R.drawable.phone};
@@ -149,7 +147,7 @@ public class PersonDetailsActivity extends AppCompatActivity {
                                                         boolean mSuccess = responseBody.isSuccess();
                                                         if (mSuccess){
                                                             String[] newStr = {mUsername,mFirstPwdText,mPhoneNumber};
-                                                            MyInfoAdapter mAdapter = new MyInfoAdapter(getApplicationContext(),ints,newStr);
+                                                            PersonDetailAdapter mAdapter = new PersonDetailAdapter(getApplicationContext(),ints,newStr);
                                                             mDetailsList.setAdapter(mAdapter);
                                                             mAdapter.notifyDataSetChanged();
                                                         }
@@ -212,7 +210,7 @@ public class PersonDetailsActivity extends AppCompatActivity {
                                                         if (mSuccess){
 //                                                            更改密码成功
                                                             String[] newStr = {mUsername,mPassword,mNewPhoneNumber};
-                                                            MyInfoAdapter mAdapter = new MyInfoAdapter(getApplicationContext(),ints,newStr);
+                                                            PersonDetailAdapter mAdapter = new PersonDetailAdapter(getApplicationContext(),ints,newStr);
                                                             mDetailsList.setAdapter(mAdapter);
                                                             mAdapter.notifyDataSetChanged();
                                                         }
@@ -251,8 +249,6 @@ public class PersonDetailsActivity extends AppCompatActivity {
             }
         });
         mDetailsList.setAdapter(mInfoAdapter);
-
-
 
     }
 }

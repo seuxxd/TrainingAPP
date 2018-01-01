@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import Adapter.MyInfoAdapter;
+import Constant.ConstantCode;
 import Constant.SourceConstant;
 import Constant.URLConstant;
 import Internet.ExamResultService;
@@ -107,18 +108,7 @@ public class MyInfoFragment extends Fragment {
             mListView.setAdapter(mMyInfoAdapter);
         }
 
-        Calendar mCalendar = Calendar.getInstance();
-
-        String mMonth = String.valueOf(mCalendar.get(Calendar.MONTH) + 1);
-        String mDay = String.valueOf(mCalendar.get(Calendar.DAY_OF_MONTH));
-        if (mCalendar.get(Calendar.MONTH) + 1 < 10){
-            mMonth = "0" + (mCalendar.get(Calendar.MONTH) + 1);
-        }
-        if (mCalendar.get(Calendar.DAY_OF_MONTH) < 10){
-            mDay = "0" + mCalendar.get(Calendar.DAY_OF_MONTH);
-        }
-        final String mTraintime = mCalendar.get(Calendar.YEAR) +"-" +
-                mMonth + "-" + mDay;
+        final String mTraintime = ConstantCode.getFormatTime();
         Log.i(TAG, "onCreateView: " + mTraintime);
 
 

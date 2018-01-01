@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.VideoView;
 
+import Constant.URLConstant;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.jzvd.JZVideoPlayer;
@@ -31,9 +32,13 @@ public class VideoPlayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_player);
         ButterKnife.bind(this);
-        String url = "http://www.jmzsjy.com/UploadFile/微课/地方风味小吃——宫廷香酥牛肉饼.mp4";
+//        String url = "http://www.jmzsjy.com/UploadFile/微课/地方风味小吃——宫廷香酥牛肉饼.mp4";
 //        String url = "http://101.132.154.189/test/upload/test1.wmv";
 //        String mTitle = getIntent().getStringExtra("title");
+        String url = getIntent().getStringExtra("equipath");
+        url = url.substring(1,url.length());
+        url = URLConstant.VIDEO_URL + url;
+        Log.i(TAG, "onCreate: " + url);
         mPlayer.setUp(url, JZVideoPlayer.SCREEN_WINDOW_FULLSCREEN,"test");
     }
 
@@ -42,7 +47,7 @@ public class VideoPlayerActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (JZVideoPlayer.backPress())
             return;
-        super.onBackPressed();
+        finish();
     }
 
     @Override

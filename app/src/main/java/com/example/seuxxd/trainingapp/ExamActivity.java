@@ -44,6 +44,7 @@ public class ExamActivity extends AppCompatActivity {
         ViewPager mPager = (ViewPager) findViewById(R.id.exam_viewPager);
         Intent mExamIntent = getIntent();
         Bundle mBundle = mExamIntent.getExtras();
+        int mType = mExamIntent.getIntExtra("type",2);
         SharedPreferences mPreferences = getSharedPreferences("answer", Context.MODE_PRIVATE);
         if (
                 mPreferences.contains("5") ||
@@ -63,6 +64,7 @@ public class ExamActivity extends AppCompatActivity {
                 mList.add(mFragment);
                 Bundle mFragmentBundle = new Bundle();
                 mFragmentBundle.putInt("index",i+1);
+                mFragmentBundle.putInt("type",mType);
                 mFragmentBundle.putParcelable("data",mDatas[i]);
                 mFragment.setArguments(mFragmentBundle);
             }

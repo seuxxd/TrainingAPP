@@ -41,8 +41,10 @@
         android:layout_above="@id/choose_group"
         android:layout_width="match_parent"
         android:gravity="center"
+        android:singleLine="false"
+        android:maxLines="3"
         android:textSize="24sp"
-        android:layout_height="40dp"/>
+        android:layout_height="wrap_content"/>
 
     <!--<LinearLayout-->
         <!--android:layout_alignParentBottom="true"-->

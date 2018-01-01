@@ -13,6 +13,10 @@
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
 
+    <!--存储使用-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo2"
@@ -20,9 +24,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:launchMode="singleInstance"
-            android:name=".MainActivity">
+            android:name=".MainActivity"
+            android:launchMode="singleInstance">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity
             android:name=".LoginActivity"
@@ -39,20 +47,17 @@
             android:name=".EquipInfoActivity"
             android:parentActivityName=".MainActivity">
         </activity>
-        <activity android:name=".PersonDetailsActivity">
+        <activity
+            android:name=".PersonDetailsActivity"
+            android:parentActivityName=".MainActivity">
+
         </activity>
         <activity android:name=".ExamActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
             android:name=".VideoPlayerActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="landscape">
-
         </activity>
         <activity
             android:name=".NewsActivity"
@@ -61,7 +66,10 @@
         <activity
             android:name=".SuggestionActivity"
             android:parentActivityName=".MainActivity">
-
+        </activity>
+        <activity
+            android:name=".IndexFourInfoActivity"
+            android:parentActivityName=".MainActivity">
         </activity>
     </application>
 

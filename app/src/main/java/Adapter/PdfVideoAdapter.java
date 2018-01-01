@@ -2,11 +2,13 @@ package Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.seuxxd.trainingapp.PDFActivity;
 import com.example.seuxxd.trainingapp.R;
@@ -14,6 +16,7 @@ import com.example.seuxxd.trainingapp.VideoPlayerActivity;
 
 import java.util.List;
 
+import Constant.ConstantCode;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -24,10 +27,14 @@ import butterknife.ButterKnife;
 public class PdfVideoAdapter extends BaseAdapter {
 
 
+    private static final String TAG = "PdfVideoAdapter";
+
     private Context mContext;
     private String[] mNameList;
     private String[] mFilePathList;
-    private int mMode;//1->pdf,2->video
+    private int mMode;
+    //ConstantCode.INDEX_PDF_TYPE
+    //ConstantCode.INDEX_VIDEO_TYPE
 
     public PdfVideoAdapter(Context context, String[] filePathList, String[] nameList , int mode) {
         mContext = context;
@@ -76,15 +83,41 @@ public class PdfVideoAdapter extends BaseAdapter {
         mHolder.mNameView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mMode == 1){
-                    Intent mIntent = new Intent(mContext, PDFActivity.class);
-                    mIntent.putExtra("equipath",mFilePathList[position]);
-                    mContext.startActivity(mIntent);
-                }
-                else if (mMode == 2){
-                    Intent mIntent = new Intent(mContext, VideoPlayerActivity.class);
-                    mIntent.putExtra("equipath",mFilePathList[position]);
-                    mContext.startActivity(mIntent);
+                switch (mMode){
+                    case ConstantCode.INDEX_PDF_TYPE:
+                    case ConstantCode.INDEX_RULES_TYPE:
+                        Intent mIntent1 = new Intent(mContext, PDFActivity.class);
+                        mIntent1.putExtra("equipath",mFilePathList[position]);
+                        mContext.startActivity(mIntent1);
+                        break;
+                    case ConstantCode.INDEX_VIDEO_TYPE:
+                        Intent mIntent2 = new Intent(mContext, VideoPlayerActivity.class);
+                        mIntent2.putExtra("equipath",mFilePathList[position]);
+                        mContext.startActivity(mIntent2);
+                        break;
+                    case ConstantCode.INDEX_ERROR_TYPE:
+                        //判断需要打开的activity类型
+                        Log.i(TAG, "onClick: " + mFilePathList[position]);
+
+
+                        char[] chars = mFilePathList[position].toCharArray();
+                        if (chars[chars.length-1] == 'f'){
+                            Intent mIntent3 = new Intent(mContext, PDFActivity.class);
+                            mIntent3.putExtra("equipath",mFilePathList[position]);
+                            mContext.startActivity(mIntent3);
+                        }
+                        else if (chars[chars.length-1] == '4' ||
+                                 chars[chars.length-1] == 'v'){
+                            Intent mIntent4 = new Intent(mContext, VideoPlayerActivity.class);
+                            mIntent4.putExtra("equipath",mFilePathList[position]);
+                            mContext.startActivity(mIntent4);
+                        }
+                        else {
+                            Toast.makeText(mContext, "文件格式有误，请联系后台管理员", Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                    default:
+                        break;
                 }
             }
         });

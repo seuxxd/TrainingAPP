@@ -22,6 +22,7 @@ import com.example.seuxxd.trainingapp.ExamActivity;
 import com.example.seuxxd.trainingapp.R;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
+import Constant.ConstantCode;
 import Constant.URLConstant;
 import Internet.ExamService;
 import Internet.ExamSpecialService;
@@ -138,8 +139,8 @@ public class ExamFragment extends Fragment {
 
     /**
      *
-     * @param database the choose of database
-     * @param difficulty the choose of difficulty
+     * @param database the choice of database
+     * @param difficulty the choice of difficulty
      *                   the result of this function is to start
      *                   a new Activity that contains the questions for self-test
      *                   if the number is less than 5, give a toast to user
@@ -156,7 +157,6 @@ public class ExamFragment extends Fragment {
                     public void onSubscribe(@NonNull Disposable d) {
                         Log.i(TAG, "onSubscribe: 订阅成功");
                     }
-
                     @Override
                     public void onNext(@NonNull ExamResponse examResponse) {
                         Log.i(TAG, "onNext: " + examResponse.getResults());
@@ -164,7 +164,11 @@ public class ExamFragment extends Fragment {
                         Bundle mBundle = new Bundle();
                         mBundle.putParcelable("exam",examResponse);
                         mExamIntent.putExtras(mBundle);
-                        mExamIntent.putExtra("type",0);//自测类别
+                        getContext()
+                                .getSharedPreferences("answer",Context.MODE_PRIVATE)
+                                .edit()
+                                .putInt("type",0)
+                                .apply();//自测类别
                         if (examResponse.getResults() < 5){
                             Toast.makeText(getContext(), "题库题目数量不足", Toast.LENGTH_SHORT).show();
                             return;
@@ -187,11 +191,15 @@ public class ExamFragment extends Fragment {
 
 
     /**
-     *
+     *    获取特殊培训考试的题目
      */
     private void getSpecialExam(){
         ExamSpecialService mService = mRetrofit.create(ExamSpecialService.class);
-        Observable<ExamResponse> mObservable = mService.getSpecialExam();
+        final String mUsername =
+                getActivity().getSharedPreferences("user",Context.MODE_PRIVATE).getString("username","");
+        Observable<ExamResponse> mObservable = mService.getSpecialExam(
+                mUsername,
+                ConstantCode.getFormatTime());
         mObservable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -204,11 +212,18 @@ public class ExamFragment extends Fragment {
                     @Override
                     public void onNext(@NonNull ExamResponse examResponse) {
 //                        这个题目确定为5题，不会变更
+                        Log.i(TAG, "onNext: 特殊考试Next");
                         Intent mExamIntent = new Intent(getActivity(),ExamActivity.class);
                         Bundle mBundle = new Bundle();
                         mBundle.putParcelable("exam",examResponse);
                         mExamIntent.putExtras(mBundle);
-                        mExamIntent.putExtra("type",1);//特殊考试类别
+                        getContext()
+                                .getSharedPreferences("answer",Context.MODE_PRIVATE)
+                                .edit()
+                                .putInt("type",1)
+                                .apply();//自测类别
+                        Log.i(TAG, "onNext: " + getContext().getSharedPreferences("answer",Context.MODE_PRIVATE).getInt("type",5));
+                        startActivity(mExamIntent);
                     }
 
                     @Override

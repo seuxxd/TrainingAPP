@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply from: 'version.gradle'
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
@@ -7,14 +7,29 @@ android {
         applicationId "com.example.seuxxd.trainingapp"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode appVersionCode
+        versionName appVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            resValue 'string','hello','release_hello'
+        }
+        debug{
+            resValue 'string','hello','debug_hello'
+        }
+    }
+    productFlavors{
+        baidu{
+            resValue "string","type","baidu"
+        }
+        xiaomi{
+            resValue "string","type","xiaomi"
+        }
+        meizu{
+            resValue "string","type","meizu"
         }
     }
 //    compileOptions{

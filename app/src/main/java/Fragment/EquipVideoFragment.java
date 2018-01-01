@@ -18,6 +18,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import Adapter.PdfVideoAdapter;
+import Constant.ConstantCode;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import model.EquipVideoResponse;
@@ -87,7 +88,7 @@ public class EquipVideoFragment extends Fragment {
             Log.i(TAG, "onFresh: " + mVideoName[i]);
             Log.i(TAG, "onFresh: " + mVideoPath[i]);
         }
-        mAdapter = new PdfVideoAdapter(getActivity(),mVideoPath,mVideoName,2);
+        mAdapter = new PdfVideoAdapter(getActivity(),mVideoPath,mVideoName, ConstantCode.INDEX_VIDEO_TYPE);
         mVideoList.setAdapter(mAdapter);
     }
 

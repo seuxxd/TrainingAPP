@@ -12,9 +12,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
+import Constant.ConstantCode;
 import Constant.URLConstant;
 import Internet.SuggestionService;
 import butterknife.BindView;
@@ -67,7 +69,11 @@ public class SuggestionActivity extends AppCompatActivity {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
         SuggestionService mService = mRetrofit.create(SuggestionService.class);
-        Observable<SuggestionResponse> mObservable = mService.submitSuggestion(mTitle,mContent,mUsername);
+        Observable<SuggestionResponse> mObservable = mService.submitSuggestion(
+                mTitle,
+                mContent,
+                mUsername,
+                ConstantCode.getFormatTime());
         mObservable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -81,16 +87,20 @@ public class SuggestionActivity extends AppCompatActivity {
                     public void onNext(@NonNull SuggestionResponse suggestionResponse) {
                         Log.i(TAG, "onNext: 是否成功 " + suggestionResponse.isSuccess());
                         Log.i(TAG, "onNext: 具体内容 " + suggestionResponse.getText());
+                        if (!suggestionResponse.isSuccess())
+                            Toast.makeText(SuggestionActivity.this, "提交失败，请重试", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
                         e.printStackTrace();
+                        Toast.makeText(SuggestionActivity.this, "提交失败，请重试", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onComplete() {
-
+                        Toast.makeText(SuggestionActivity.this, "提交成功", Toast.LENGTH_SHORT).show();
+                        finish();
                     }
                 });
     }

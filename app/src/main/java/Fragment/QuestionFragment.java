@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,11 +69,13 @@ public class QuestionFragment extends Fragment {
         Bundle mBundle = getArguments();
         QuestionData mData = mBundle.getParcelable("data");
         final String mIndex = String.valueOf(mBundle.getInt("index"));
+        final int mType = mBundle.getInt("type");
         View mLayout = inflater.inflate(R.layout.fragment_question, container, false);
         ButterKnife.bind(this,mLayout);
         mQuestionToolbar.setTitle("");
         mToolbarIcon.setImageResource(SourceConstant.newInstance().getQuestionNumber()[Integer.valueOf(mIndex)-1]);
         mToolbarText.setText("题目" + mIndex);
+        mQuestionText.setMovementMethod(ScrollingMovementMethod.getInstance());
         final SharedPreferences.Editor mEditor = getActivity().getSharedPreferences("answer", Context.MODE_PRIVATE).edit();
         if (mData != null){
             String mQuestionMain = mData.getQuestionbank();
@@ -97,6 +100,7 @@ public class QuestionFragment extends Fragment {
                     Intent mIntent = new Intent();
                     mIntent.putExtra("right"+mIndex,mAnswer);
                     mEditor.putString("right"+mIndex,mAnswer);
+                    mEditor.putInt("type",mType);
                     Log.i(TAG, "index: " + mIndex);
                     switch (checkedId){
                         case R.id.choose_a:
@@ -122,6 +126,7 @@ public class QuestionFragment extends Fragment {
                     if (mIndex.equals("5"))
                         EventBus.getDefault().post(new FifthAnswer());
                     getActivity().setIntent(mIntent);
+                    Log.i(TAG, "onCheckedChanged: " + getActivity().getSharedPreferences("answer",Context.MODE_PRIVATE).getInt("type",100));
                 }
             });
 

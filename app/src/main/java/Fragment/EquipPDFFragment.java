@@ -22,6 +22,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import Adapter.PdfVideoAdapter;
+import Constant.ConstantCode;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import model.EquipPdfResponse;
@@ -92,7 +93,7 @@ public class EquipPDFFragment extends Fragment {
             Log.i(TAG, "onResponse: " + mFileName[i]);
             Log.i(TAG, "onResponse: " + mFilePath[i]);
         }
-        mAdapter = new PdfVideoAdapter(getActivity(),mFilePath,mFileName,1);
+        mAdapter = new PdfVideoAdapter(getActivity(),mFilePath,mFileName, ConstantCode.INDEX_PDF_TYPE);
         mListView.setAdapter(mAdapter);
     }
 

@@ -10,8 +10,9 @@ import retrofit2.http.Query;
  */
 
 public interface SuggestionService {
-    @GET()
+    @GET("AppOpinSug.action")
     Observable<SuggestionResponse> submitSuggestion(@Query("title") String title,
                                                     @Query("content") String content,
-                                                    @Query("username") String username);
+                                                    @Query("username") String username,
+                                                    @Query("subtime") String subtime);
 }

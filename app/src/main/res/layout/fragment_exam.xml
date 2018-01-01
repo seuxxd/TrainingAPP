@@ -1,37 +1,48 @@
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/examColor"
+    android:background="#A4D3EE"
     android:layout_margin="@dimen/activity_vertical_margin">
 
 
 
+    <TextView
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
     <Button
         android:id="@+id/self_exam"
-        android:layout_alignParentTop="true"
         android:textSize="20sp"
+        android:layout_gravity="center_horizontal"
         android:layout_margin="@dimen/distance"
-        android:layout_centerHorizontal="true"
         android:background="@drawable/exam_btn"
         android:text="@string/self_exam"
         android:layout_width="150dp"
         android:layout_height="150dp"/>
+    <TextView
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
     <Button
         android:id="@+id/start_exam"
         android:text="@string/start_exam"
         android:background="@drawable/exam_btn"
-        android:layout_below="@id/self_exam"
         android:textSize="20sp"
+        android:layout_gravity="center_horizontal"
         android:layout_margin="@dimen/distance"
-        android:layout_centerHorizontal="true"
         android:layout_width="150dp"
         android:layout_height="150dp"/>
+    <TextView
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
 
 
 
 
 
 
-</RelativeLayout>
+</LinearLayout>
