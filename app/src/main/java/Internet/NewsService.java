@@ -1,7 +1,7 @@
 package Internet;
 
 import io.reactivex.Observable;
-import model.NewsResponse;
+import model.news.NewsResponse;
 import retrofit2.http.GET;
 
 /**

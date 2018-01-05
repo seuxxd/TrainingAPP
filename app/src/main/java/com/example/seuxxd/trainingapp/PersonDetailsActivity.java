@@ -2,7 +2,6 @@ package com.example.seuxxd.trainingapp;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,19 +11,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
-import java.io.IOException;
-
-import Adapter.MyInfoAdapter;
 import Adapter.PersonDetailAdapter;
 import Constant.URLConstant;
 import Internet.PasswordChangeService;
@@ -37,9 +29,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import model.ChangeNumberResponse;
-import model.ChangePasswordResponse;
-import okhttp3.ResponseBody;
+import model.changeinfo.ChangeNumberResponse;
+import model.changeinfo.ChangePasswordResponse;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -150,6 +141,10 @@ public class PersonDetailsActivity extends AppCompatActivity {
                                                             PersonDetailAdapter mAdapter = new PersonDetailAdapter(getApplicationContext(),ints,newStr);
                                                             mDetailsList.setAdapter(mAdapter);
                                                             mAdapter.notifyDataSetChanged();
+                                                            getSharedPreferences("user",Context.MODE_PRIVATE)
+                                                                    .edit()
+                                                                    .putString("password",mFirstPwdText)
+                                                                    .apply();
                                                         }
                                                         else {
                                                             Toast.makeText(PersonDetailsActivity.this, "更改密码失败", Toast.LENGTH_SHORT).show();

@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.seuxxd.trainingapp.R;
@@ -15,7 +14,7 @@ import java.util.List;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import model.EquipmentData;
+import model.equipment.EquipmentData;
 
 /**
  * Created by SEUXXD on 2017/12/12.
@@ -47,24 +46,24 @@ public class EquipmentAdapter extends BaseAdapter {
 
 
     static class ViewHolder{
-        @BindView(R.id.equip_id)
-        TextView mIdText;
+        @BindView(R.id.equip_type)
+        TextView mTypeText;
+        @BindView(R.id.equip_voltage)
+        TextView mVoltageText;
         @BindView(R.id.equip_name)
         TextView mNameText;
-        @BindView(R.id.equip_model)
-        TextView mModelText;
-        @BindView(R.id.equip_function)
-        TextView mFunctionText;
         @BindView(R.id.equip_maker)
         TextView mMakerText;
-        @BindString(R.string.equip_id)
-        String mStringId;
+        @BindView(R.id.equip_brand_type)
+        TextView mBrandText;
+        @BindString(R.string.equip_type)
+        String mStringType;
+        @BindString(R.string.equip_voltage)
+        String mStringVoltage;
+        @BindString(R.string.equip_brand)
+        String mStringBrand;
         @BindString(R.string.equip_name)
         String mStringName;
-        @BindString(R.string.equip_model)
-        String mStringModel;
-        @BindString(R.string.equip_function)
-        String mStringFunction;
         @BindString(R.string.equip_maker)
         String mStringMaker;
 
@@ -84,11 +83,11 @@ public class EquipmentAdapter extends BaseAdapter {
         else {
             mHolder = (ViewHolder) convertView.getTag();
         }
-        mHolder.mIdText.setText(mHolder.mStringId + mDataList.get(position).getCabinetID());
-        mHolder.mNameText.setText(mHolder.mStringName + mDataList.get(position).getEquipmentName());
-        mHolder.mModelText.setText(mHolder.mStringModel + mDataList.get(position).getEquipmodel());
-        mHolder.mFunctionText.setText(mHolder.mStringFunction + mDataList.get(position).getFunction());
-        mHolder.mMakerText.setText(mHolder.mStringMaker + mDataList.get(position).getManufinfor());
+        mHolder.mTypeText.setText(mHolder.mStringType + mDataList.get(position).getEquipmenttype());
+        mHolder.mVoltageText.setText(mHolder.mStringVoltage + mDataList.get(position).getVoltagegrade());
+        mHolder.mNameText.setText(mHolder.mStringName + mDataList.get(position).getEquipname());
+        mHolder.mBrandText.setText(mHolder.mStringBrand + mDataList.get(position).getNamemodel());
+        mHolder.mMakerText.setText(mHolder.mStringMaker + mDataList.get(position).getNamemanufa());
         return convertView;
     }
 }

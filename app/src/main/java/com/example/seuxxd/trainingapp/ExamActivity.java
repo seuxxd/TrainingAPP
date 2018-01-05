@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -16,8 +15,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.ExamResponse;
-import model.QuestionData;
+import model.questions.ExamResponse;
+import model.questions.QuestionData;
 
 import Fragment.QuestionFragment;
 import Fragment.QuestionFinishFragment;
@@ -44,7 +43,6 @@ public class ExamActivity extends AppCompatActivity {
         ViewPager mPager = (ViewPager) findViewById(R.id.exam_viewPager);
         Intent mExamIntent = getIntent();
         Bundle mBundle = mExamIntent.getExtras();
-        int mType = mExamIntent.getIntExtra("type",2);
         SharedPreferences mPreferences = getSharedPreferences("answer", Context.MODE_PRIVATE);
         if (
                 mPreferences.contains("5") ||
@@ -55,6 +53,7 @@ public class ExamActivity extends AppCompatActivity {
             mPreferences.edit().clear().apply();
         }
         ExamResponse mExamResponse = mBundle.getParcelable("exam");
+        int mType = mBundle.getInt("type",2);
         if (mExamResponse != null){
             int count = mExamResponse.getResults();
             QuestionData[] mDatas = mExamResponse.getRows();
@@ -68,6 +67,7 @@ public class ExamActivity extends AppCompatActivity {
                 mFragmentBundle.putParcelable("data",mDatas[i]);
                 mFragment.setArguments(mFragmentBundle);
             }
+            mPreferences.edit().putInt("type",mType).apply();
             mList.add(QuestionFinishFragment.newInstance());
             QuestionViewPagerAdapter mAdapter = new QuestionViewPagerAdapter(getSupportFragmentManager());
             mPager.setAdapter(mAdapter);

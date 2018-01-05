@@ -1,8 +1,7 @@
 package Internet;
 
 import io.reactivex.Observable;
-import model.ChangeNumberResponse;
-import okhttp3.ResponseBody;
+import model.changeinfo.ChangeNumberResponse;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 

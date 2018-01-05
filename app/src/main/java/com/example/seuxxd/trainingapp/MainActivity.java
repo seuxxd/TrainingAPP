@@ -1,8 +1,5 @@
 package com.example.seuxxd.trainingapp;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +9,6 @@ import android.os.Build;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -28,34 +24,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import Constant.BroadcastConstant;
-import Constant.URLConstant;
 import Fragment.EquipmentFragment;
 import Fragment.ExamFragment;
 import Fragment.MyInfoFragment;
 import Fragment.IndexFragment;
-import Internet.MessageService;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.jzvd.JZVideoPlayer;
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
-import model.MessageDetails;
-import model.MessageResponse;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 

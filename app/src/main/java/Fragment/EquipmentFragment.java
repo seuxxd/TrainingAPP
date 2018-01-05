@@ -8,7 +8,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -16,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +28,6 @@ import java.util.List;
 
 import Constant.URLConstant;
 import Internet.EquipPdfService;
-import Internet.EquipVideoService;
 import Internet.EquipmentService;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,12 +38,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import model.EquipPdfResponse;
-import model.EquipVideoResponse;
-import model.EquipmentData;
-import model.EquipmentResponse;
-import model.FileInfo;
-import model.VideoInfo;
+import model.equipment.EquipPdfResponse;
+import model.equipment.EquipmentResponse;
+import model.scan.ScanPdfId;
+import model.scan.ScanVideoId;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import zxing.activity.CaptureActivity;
@@ -64,6 +59,7 @@ public class EquipmentFragment extends Fragment {
 
 
     private static final String TAG = "EquipmentFragment";
+    public static String mId;
     private String[] mTitles = {"信息","文档","视频"};
     private List<Fragment> mFragmentList;
     private EquipInfoFragment mEquipInfoFragment;
@@ -158,6 +154,10 @@ public class EquipmentFragment extends Fragment {
                     String mUnitId = temp[temp.length - 1];
                     Log.i(TAG, "doGetInfo: " + mUnitId);
                     getEquipInfo(mUnitId);
+                    EventBus.getDefault().post(new ScanPdfId(mUnitId));
+                    EventBus.getDefault().post(new ScanVideoId(mUnitId));
+                    mEquipVideoFragment.mId = mUnitId;
+                    mId = mUnitId;
                     break;
                 case SCAN_RESULT_FAILED:
                     break;
@@ -170,8 +170,8 @@ public class EquipmentFragment extends Fragment {
 
     private void getEquipInfo(String unitid){
         EquipmentService mEquipmentService = mRetorfit.create(EquipmentService.class);
-        getPDFInfo(unitid);
-        getVideoInfo(unitid);
+//        getPDFInfo(unitid);
+//        getVideoInfo(unitid);
         Observable<EquipmentResponse> mObservable = mEquipmentService.getEquipmentInfo(unitid);
         mObservable
                 .subscribeOn(Schedulers.io())
@@ -241,39 +241,7 @@ public class EquipmentFragment extends Fragment {
                 });
     }
 
-    /**
-     *
-     * @param unitid video id
-     */
-    private void getVideoInfo(String unitid){
-        EquipVideoService mService = mRetorfit.create(EquipVideoService.class);
-        Observable<EquipVideoResponse> mObservable = mService.getVideoInfo(unitid);
-        mObservable
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<EquipVideoResponse>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-                        Log.i(TAG, "onSubscribe: 获取Video信息订阅成功");
-                    }
 
-                    @Override
-                    public void onNext(@NonNull EquipVideoResponse equipVideoResponse) {
-                        Log.i(TAG, "onNext: post");
-                        EventBus.getDefault().post(equipVideoResponse);
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
     class InnerViewPagerAdapter extends FragmentPagerAdapter{
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {

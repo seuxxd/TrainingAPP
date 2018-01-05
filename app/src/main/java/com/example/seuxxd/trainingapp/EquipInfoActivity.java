@@ -1,22 +1,25 @@
 package com.example.seuxxd.trainingapp;
 
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import Adapter.EquipmentAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import model.EquipmentData;
+import model.equipment.EquipmentData;
 
 public class EquipInfoActivity extends AppCompatActivity {
 
 
     @BindView(R.id.equip_info_details)
     ListView mInfoList;
+    @BindView(R.id.equip_toolbar)
+    Toolbar mEquipToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +31,12 @@ public class EquipInfoActivity extends AppCompatActivity {
 //        EquipmentData mData = mBundle.getParcelable("data");
         EquipmentAdapter mAdapter = new EquipmentAdapter(this, mList);
         mInfoList.setAdapter(mAdapter);
-        mInfoList.setHeaderDividersEnabled(true);
-        mInfoList.setDividerHeight(20);
+        mEquipToolbar.setTitle("设备详细信息");
+        mEquipToolbar.setBackgroundResource(R.color.loginColor);
+        setSupportActionBar(mEquipToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Drawable mDrawable = getResources().getDrawable(R.drawable.list_divider);
+        mInfoList.setDivider(mDrawable);
+        mInfoList.setDividerHeight(30);
     }
 }

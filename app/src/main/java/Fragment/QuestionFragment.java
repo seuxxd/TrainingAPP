@@ -17,7 +17,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.example.seuxxd.trainingapp.ExamActivity;
 import com.example.seuxxd.trainingapp.R;
 
 import org.greenrobot.eventbus.EventBus;
@@ -25,8 +24,8 @@ import org.greenrobot.eventbus.EventBus;
 import Constant.SourceConstant;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import model.FifthAnswer;
-import model.QuestionData;
+import model.questions.FifthAnswer;
+import model.questions.QuestionData;
 
 
 /**

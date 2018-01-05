@@ -9,33 +9,23 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.seuxxd.trainingapp.ExamActivity;
 import com.example.seuxxd.trainingapp.LoginActivity;
 import com.example.seuxxd.trainingapp.PersonDetailsActivity;
 import com.example.seuxxd.trainingapp.R;
 import com.example.seuxxd.trainingapp.SuggestionActivity;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
-
 import Adapter.MyInfoAdapter;
 import Constant.ConstantCode;
 import Constant.SourceConstant;
 import Constant.URLConstant;
-import Internet.ExamResultService;
-import Internet.ExamService;
 import Internet.SignService;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,9 +35,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import model.ExamResponse;
-import model.SignResponse;
-import okhttp3.ResponseBody;
+import model.sign.SignResponse;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

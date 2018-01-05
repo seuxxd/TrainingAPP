@@ -93,6 +93,7 @@ public class PdfVideoAdapter extends BaseAdapter {
                     case ConstantCode.INDEX_VIDEO_TYPE:
                         Intent mIntent2 = new Intent(mContext, VideoPlayerActivity.class);
                         mIntent2.putExtra("equipath",mFilePathList[position]);
+                        mIntent2.putExtra("name",mNameList[position]);
                         mContext.startActivity(mIntent2);
                         break;
                     case ConstantCode.INDEX_ERROR_TYPE:
@@ -110,6 +111,7 @@ public class PdfVideoAdapter extends BaseAdapter {
                                  chars[chars.length-1] == 'v'){
                             Intent mIntent4 = new Intent(mContext, VideoPlayerActivity.class);
                             mIntent4.putExtra("equipath",mFilePathList[position]);
+                            mIntent4.putExtra("name",mNameList[position]);
                             mContext.startActivity(mIntent4);
                         }
                         else {

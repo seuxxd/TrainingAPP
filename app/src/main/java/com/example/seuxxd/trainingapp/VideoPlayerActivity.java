@@ -35,18 +35,19 @@ public class VideoPlayerActivity extends AppCompatActivity {
 //        String url = "http://www.jmzsjy.com/UploadFile/微课/地方风味小吃——宫廷香酥牛肉饼.mp4";
 //        String url = "http://101.132.154.189/test/upload/test1.wmv";
 //        String mTitle = getIntent().getStringExtra("title");
-        String url = getIntent().getStringExtra("equipath");
-        url = url.substring(1,url.length());
-        url = URLConstant.VIDEO_URL + url;
-        Log.i(TAG, "onCreate: " + url);
-        mPlayer.setUp(url, JZVideoPlayer.SCREEN_WINDOW_FULLSCREEN,"test");
+        String mUrl = getIntent().getStringExtra("equipath");
+        String mName = getIntent().getStringExtra("name");
+        mUrl = mUrl.substring(1,mUrl.length());
+        mUrl = URLConstant.VIDEO_URL + mUrl;
+        Log.i(TAG, "onCreate: " + mUrl);
+        mPlayer.setUp(mUrl, JZVideoPlayer.SCREEN_WINDOW_FULLSCREEN,mName);
     }
 
 
     @Override
     public void onBackPressed() {
-        if (JZVideoPlayer.backPress())
-            return;
+//        if (JZVideoPlayer.backPress())
+//            return;
         finish();
     }
 

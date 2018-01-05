@@ -4,9 +4,7 @@ package Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -35,7 +33,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import model.ExamResponse;
+import model.questions.ExamResponse;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -163,6 +161,7 @@ public class ExamFragment extends Fragment {
                         Intent mExamIntent = new Intent(getActivity(), ExamActivity.class);
                         Bundle mBundle = new Bundle();
                         mBundle.putParcelable("exam",examResponse);
+                        mBundle.putInt("type",0);
                         mExamIntent.putExtras(mBundle);
                         getContext()
                                 .getSharedPreferences("answer",Context.MODE_PRIVATE)
@@ -215,7 +214,12 @@ public class ExamFragment extends Fragment {
                         Log.i(TAG, "onNext: 特殊考试Next");
                         Intent mExamIntent = new Intent(getActivity(),ExamActivity.class);
                         Bundle mBundle = new Bundle();
+                        if (examResponse.getResults() != 5){
+                            Toast.makeText(getContext(), "今天没有考试", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         mBundle.putParcelable("exam",examResponse);
+                        mBundle.putInt("type",1);
                         mExamIntent.putExtras(mBundle);
                         getContext()
                                 .getSharedPreferences("answer",Context.MODE_PRIVATE)

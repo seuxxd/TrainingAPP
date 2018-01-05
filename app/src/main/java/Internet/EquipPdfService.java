@@ -1,7 +1,7 @@
 package Internet;
 
 import io.reactivex.Observable;
-import model.EquipPdfResponse;
+import model.equipment.EquipPdfResponse;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 

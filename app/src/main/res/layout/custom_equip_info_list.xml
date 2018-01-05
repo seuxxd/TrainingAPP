@@ -2,38 +2,34 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
-        android:id="@+id/equip_id"
-        android:textSize="24sp"
-        android:gravity="center"
+        android:id="@+id/equip_type"
+        android:textAppearance="@style/equipInfoText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/equip_voltage"
+        android:textAppearance="@style/equipInfoText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <TextView
         android:id="@+id/equip_name"
-        android:textSize="24sp"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:id="@+id/equip_model"
-        android:textSize="24sp"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:id="@+id/equip_function"
-        android:textSize="24sp"
-        android:gravity="center"
+        android:textAppearance="@style/equipInfoText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <TextView
         android:id="@+id/equip_maker"
-        android:textSize="24sp"
-        android:gravity="center"
+        android:textAppearance="@style/equipInfoText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/equip_brand_type"
+        android:textAppearance="@style/equipInfoText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

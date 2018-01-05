@@ -2,6 +2,7 @@ package Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import model.MessageDetails;
+import model.message.MessageDetails;
 
 /**
  * Created by SEUXXD on 2017/12/6.
@@ -26,6 +27,9 @@ import model.MessageDetails;
 public class TrainingMessageAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<MessageDetails> mList;
+
+
+    private static final String TAG = "TrainingMessageAdapter";
 
     public TrainingMessageAdapter(Context context, ArrayList<MessageDetails> list) {
         mContext = context;
@@ -75,11 +79,11 @@ public class TrainingMessageAdapter extends BaseAdapter {
         mHolder.mName.setText(mList.get(position).getLoginname());
         mHolder.mTime.setText(mList.get(position).getTraintime());
         final String mEquipath = mList.get(position).getProfile();
+        Log.i(TAG, "getView: " + mEquipath);
         mHolder.mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent mIntent = new Intent(mContext, PDFActivity.class);
-                Toast.makeText(mContext, mEquipath, Toast.LENGTH_SHORT).show();
                 mIntent.putExtra("equipath",mEquipath);
                 mContext.startActivity(mIntent);
             }

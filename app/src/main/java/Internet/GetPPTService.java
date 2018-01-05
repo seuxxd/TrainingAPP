@@ -3,7 +3,7 @@ package Internet;
 
 
 import io.reactivex.Observable;
-import model.IndexPdf;
+import model.index.IndexPdf;
 import retrofit2.http.GET;
 
 /**

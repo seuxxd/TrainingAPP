@@ -50,21 +50,18 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import model.IndexError;
-import model.IndexPdf;
-import model.IndexRules;
-import model.IndexRulesDetails;
-import model.IndexVideo;
-import model.MessageDetails;
-import model.MessageResponse;
-import model.NewsDetail;
-import model.NewsResponse;
-import model.SignResponse;
+import model.index.IndexError;
+import model.index.IndexPdf;
+import model.index.IndexRules;
+import model.index.IndexVideo;
+import model.message.MessageDetails;
+import model.message.MessageResponse;
+import model.news.NewsDetail;
+import model.news.NewsResponse;
+import model.sign.SignResponse;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 /**
  * A simple {@link Fragment} subclass.

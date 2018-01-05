@@ -57,6 +57,16 @@ final class CameraConfigurationManager {
     Display display = manager.getDefaultDisplay();
     screenResolution = new Point(display.getWidth(), display.getHeight());
     Log.d(TAG, "Screen resolution: " + screenResolution);
+
+//  尝试解决拉伸问题
+    Point screenResolutionForCamera = new Point();
+    screenResolutionForCamera.x = screenResolution.x;
+    screenResolutionForCamera.y = screenResolution.y;
+    if(screenResolution.x < screenResolution.y) {
+      screenResolutionForCamera.x = screenResolution.y;
+      screenResolutionForCamera.y = screenResolution.x;
+    }
+
     cameraResolution = getCameraResolution(parameters, screenResolution);
     Log.d(TAG, "Camera resolution: " + screenResolution);
   }

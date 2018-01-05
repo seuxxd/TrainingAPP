@@ -1,7 +1,7 @@
 package Internet;
 
 import io.reactivex.Observable;
-import model.MessageResponse;
+import model.message.MessageResponse;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 

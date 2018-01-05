@@ -1,7 +1,7 @@
 package Internet;
 
 import io.reactivex.Observable;
-import model.EquipVideoResponse;
+import model.equipment.EquipVideoResponse;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 

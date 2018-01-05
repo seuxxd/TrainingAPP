@@ -1,18 +1,15 @@
 package com.example.seuxxd.trainingapp;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import Adapter.TrainingMessageAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import model.MessageDetails;
+import model.message.MessageDetails;
 
 public class MessageActivity extends AppCompatActivity {
 

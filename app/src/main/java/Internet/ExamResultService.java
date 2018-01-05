@@ -1,8 +1,7 @@
 package Internet;
 
 import io.reactivex.Observable;
-import model.ScoreSubmitResponse;
-import okhttp3.ResponseBody;
+import model.questions.ScoreSubmitResponse;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 

@@ -15,7 +15,7 @@ import retrofit2.http.Streaming;
 public interface DownloadService {
 
 //    "unitjson!showRainMesdpdf.action"   下载
-    @Streaming
+//    @Streaming
     @GET("AppTrainPdf.action") //在线
     Observable<ResponseBody> doDownload(@Query("equipath") String equipath);
 

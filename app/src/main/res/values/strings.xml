@@ -49,11 +49,11 @@
     <string name="pdf_empty_list">无文档数据</string>
     <string name="video_empty_list">无视频数据</string>
 
-    <string name="equip_id">设备ID:</string>
-    <string name="equip_name">设备名:</string>
-    <string name="equip_model">设备模型:</string>
-    <string name="equip_function">设备功能:</string>
-    <string name="equip_maker">设备制造商:</string>
+    <string name="equip_voltage">电压等级:</string>
+    <string name="equip_name">设备名称:</string>
+    <string name="equip_type">设备类型:</string>
+    <string name="equip_brand">铭牌型号:</string>
+    <string name="equip_maker">铭牌厂商:</string>
 
     <string name="class_one">分类一</string>
     <string name="class_two">分类二</string>

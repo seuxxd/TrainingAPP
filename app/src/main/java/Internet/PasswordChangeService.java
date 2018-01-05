@@ -1,8 +1,7 @@
 package Internet;
 
 import io.reactivex.Observable;
-import model.ChangePasswordResponse;
-import okhttp3.ResponseBody;
+import model.changeinfo.ChangePasswordResponse;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 

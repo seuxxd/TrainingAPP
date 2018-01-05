@@ -1,8 +1,7 @@
 package Internet;
 
 import io.reactivex.Observable;
-import model.SignResponse;
-import okhttp3.ResponseBody;
+import model.sign.SignResponse;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 

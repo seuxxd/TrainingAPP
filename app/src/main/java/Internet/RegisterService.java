@@ -1,10 +1,8 @@
 package Internet;
 
 import io.reactivex.Observable;
-import model.RegisterInfo;
-import model.RegisterResponse;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
+import model.register.RegisterInfo;
+import model.register.RegisterResponse;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;

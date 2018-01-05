@@ -1,7 +1,7 @@
 package Internet;
 
 import io.reactivex.Observable;
-import model.IndexRules;
+import model.index.IndexRules;
 import retrofit2.http.GET;
 
 /**

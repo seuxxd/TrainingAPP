@@ -24,8 +24,8 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import model.EquipmentData;
-import model.EquipmentResponse;
+import model.equipment.EquipmentData;
+import model.equipment.EquipmentResponse;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -92,15 +92,8 @@ public class EquipInfoFragment extends Fragment {
         View mLayout = inflater.inflate(R.layout.fragment_equip_info,container,false);
         ButterKnife.bind(this,mLayout);
         if (mEquipmentData != null){
-//            String mEquipModel   = mEquipmentData.getEquipmodel();
-//            String mFunction     = mEquipmentData.getFunction();
-//            String mManufacturer = mEquipmentData.getManufinfor();
             int mCount = mEquipmentData.length;
             mInfoView.setText("点击查看详细" + mCount + "条设备信息");
-//            mInfoView.setText(
-//                    "设备型号:" + "\t" + mEquipModel + "\n" +
-//                            "制造商:" + "\t" + mManufacturer + "\n" +
-//                            "功能:" + "\t" + mFunction + "\n");
         }
         return mLayout;
     }

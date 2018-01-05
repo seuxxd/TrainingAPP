@@ -3,7 +3,6 @@ package com.example.seuxxd.trainingapp;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -11,14 +10,14 @@ import Adapter.PdfVideoAdapter;
 import Constant.ConstantCode;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import model.IndexError;
-import model.IndexErrorDetails;
-import model.IndexPdf;
-import model.IndexPdfDetails;
-import model.IndexRules;
-import model.IndexRulesDetails;
-import model.IndexVideo;
-import model.IndexVideoDetails;
+import model.index.IndexError;
+import model.index.IndexErrorDetails;
+import model.index.IndexPdf;
+import model.index.IndexPdfDetails;
+import model.index.IndexRules;
+import model.index.IndexRulesDetails;
+import model.index.IndexVideo;
+import model.index.IndexVideoDetails;
 
 public class IndexFourInfoActivity extends AppCompatActivity {
 

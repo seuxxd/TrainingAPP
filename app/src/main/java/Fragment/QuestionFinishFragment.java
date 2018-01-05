@@ -1,14 +1,10 @@
 package Fragment;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,13 +14,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.seuxxd.trainingapp.MainActivity;
 import com.example.seuxxd.trainingapp.R;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
@@ -32,7 +26,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -40,7 +33,6 @@ import java.util.List;
 import Adapter.AnswerAdapter;
 import Constant.URLConstant;
 import Internet.ExamResultService;
-import Internet.ExamSpecialService;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -50,10 +42,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import model.ExamResponse;
-import model.FifthAnswer;
-import model.ScoreSubmitResponse;
-import okhttp3.ResponseBody;
+import model.questions.FifthAnswer;
+import model.questions.ScoreSubmitResponse;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -250,6 +240,12 @@ public class QuestionFinishFragment extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 //                                do nothing
+                                mAnswerList.setAdapter(new AnswerAdapter(
+                                        mAnswers,
+                                        mResultColors,
+                                        getContext(),
+                                        mDrawables,
+                                        mRightAnswers));
                             }
                         })
                         .show();
@@ -259,7 +255,7 @@ public class QuestionFinishFragment extends Fragment {
                 final int mDifficulty = mPreferences.getInt("difficulty",0);
                 mPreferences = getActivity()
                         .getSharedPreferences("user", Context.MODE_PRIVATE);
-                final String mUsername = mPreferences.getString("userName","");
+                final String mUsername = mPreferences.getString("username","");
                 final String mTimeFormat = getTimeFormat();
                 mDialog = new AlertDialog.Builder(getContext())
                         .setTitle("培训测试成绩")
@@ -297,7 +293,12 @@ public class QuestionFinishFragment extends Fragment {
 
                                             @Override
                                             public void onComplete() {
-
+                                                mAnswerList.setAdapter(new AnswerAdapter(
+                                                        mAnswers,
+                                                        mResultColors,
+                                                        getContext(),
+                                                        mDrawables,
+                                                        mRightAnswers));
                                             }
                                         });
                             }
