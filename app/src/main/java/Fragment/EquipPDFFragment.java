@@ -66,8 +66,8 @@ public class EquipPDFFragment extends Fragment {
 
     @BindView(R.id.equip_pdf_list)
     ListView mListView;
-//    @BindView(R.id.pdf_list_empty)
-//    TextView mTextView;
+    @BindView(R.id.pdf_list_empty)
+    TextView mTextView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,14 +80,12 @@ public class EquipPDFFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mId = null;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-        mId = null;
     }
 
     @Override
@@ -97,7 +95,10 @@ public class EquipPDFFragment extends Fragment {
         View mLayout = inflater.inflate(R.layout.fragment_equip_pdf, container, false);
         ButterKnife.bind(this,mLayout);
 
-        getPDFInfo(mId);
+        if (mId == null)
+            mListView.setEmptyView(mTextView);
+        else
+            getPDFInfo(mId);
 
         return mLayout;
     }
@@ -120,7 +121,7 @@ public class EquipPDFFragment extends Fragment {
 
                     @Override
                     public void onNext(@NonNull EquipPdfResponse equipPdfResponse) {
-                        if (equipPdfResponse.isSuccess()){
+                        Log.i(TAG, "onNext: PDF next");
                             mFileInfo = equipPdfResponse.getData();
                             mFilePath = new String[mFileInfo.length];
                             mFileName = new String[mFileInfo.length];
@@ -128,9 +129,21 @@ public class EquipPDFFragment extends Fragment {
                                 mFilePath[i] = mFileInfo[i].getFilepath();
                                 mFileName[i] = mFileInfo[i].getName();
                             }
-                            mAdapter = new PdfVideoAdapter(getActivity(),mFilePath,mFileName, ConstantCode.INDEX_PDF_TYPE);
-                            mListView.setAdapter(mAdapter);
-                        }
+                            if (mFileInfo.length >= 1){
+                                Log.i(TAG, "onNext: 1111");
+                                mAdapter = new PdfVideoAdapter(getActivity(),mFilePath,mFileName, ConstantCode.INDEX_PDF_TYPE);
+                                mListView.setAdapter(mAdapter);
+                                mAdapter.notifyDataSetChanged();
+                                mTextView.setVisibility(View.GONE);
+                            }
+                            else {
+                                Log.i(TAG, "onNext: none");
+                                mAdapter = null;
+                                mListView.setAdapter(null);
+                                mTextView.setVisibility(View.VISIBLE);
+                                mListView.setEmptyView(mTextView);
+                                mId = null;
+                            }
                     }
 
                     @Override
@@ -147,9 +160,11 @@ public class EquipPDFFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getPDFId(ScanPdfId id){
-        Log.i(TAG, "getPDFId: 触发eventbus");
+        Log.i(TAG, "getPDFId: 触发eventbus" + id.getId());
+        mAdapter = null;
         mId = id.getId();
         getPDFInfo(mId);
+        Log.i(TAG, "getPDFId: eventbus之后" + mId);
     }
 
 }

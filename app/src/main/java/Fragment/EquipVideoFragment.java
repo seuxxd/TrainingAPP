@@ -57,8 +57,8 @@ public class EquipVideoFragment extends Fragment {
     private String[] mVideoPath;
     @BindView(R.id.equip_video_list)
     ListView mVideoList;
-//    @BindView(R.id.video_list_empty)
-//    TextView mTextView;
+    @BindView(R.id.video_list_empty)
+    TextView mTextView;
 
     private PdfVideoAdapter mAdapter;
     public EquipVideoFragment() {
@@ -77,14 +77,12 @@ public class EquipVideoFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mId = null;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-        mId = null;
     }
 
     @Override
@@ -94,7 +92,12 @@ public class EquipVideoFragment extends Fragment {
         View mLayout = inflater.inflate(R.layout.fragment_equip_video, container, false);
         ButterKnife.bind(this,mLayout);
 
-        getVideoInfo(mId);
+        if (mId == null){
+            mVideoList.setEmptyView(mTextView);
+        }
+        else{
+            getVideoInfo(mId);
+        }
 
         return mLayout;
     }
@@ -125,8 +128,20 @@ public class EquipVideoFragment extends Fragment {
                             mVideoName[i] = mVideoInfo[i].getName();
                             mVideoPath[i] = mVideoInfo[i].getFilepath();
                         }
-                        mAdapter = new PdfVideoAdapter(getActivity(),mVideoPath,mVideoName, ConstantCode.INDEX_VIDEO_TYPE);
-                        mVideoList.setAdapter(mAdapter);
+                        if (mVideoInfo.length >= 1){
+                            mAdapter = new PdfVideoAdapter(getActivity(),mVideoPath,mVideoName, ConstantCode.INDEX_VIDEO_TYPE);
+                            mVideoList.setAdapter(mAdapter);
+                            mAdapter.notifyDataSetChanged();
+                            mTextView.setVisibility(View.GONE);
+                        }
+                        else{
+                            mTextView.setVisibility(View.VISIBLE);
+                            mVideoList.setEmptyView(mTextView);
+                            mId = null;
+                            mAdapter = null;
+                            mVideoList.setAdapter(null);
+                        }
+
                     }
 
                     @Override
@@ -144,6 +159,7 @@ public class EquipVideoFragment extends Fragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getVideoId(ScanVideoId id){
         Log.i(TAG, "getVideoId: 触发eventbus");
+        mAdapter = null;
         mId = id.getId();
         getVideoInfo(mId);
     }

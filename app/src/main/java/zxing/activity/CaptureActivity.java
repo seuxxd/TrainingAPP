@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.util.Vector;
 
 import Constant.ConstantCode;
+import Fragment.EquipPDFFragment;
+import Fragment.EquipVideoFragment;
 import zxing.camera.CameraManager;
 import zxing.decoding.CaptureActivityHandler;
 import zxing.decoding.InactivityTimer;
@@ -132,6 +134,8 @@ public class CaptureActivity extends Activity implements Callback {
 //			Bundle bundle = new Bundle();
 			resultIntent.putExtra("result", resultString);
 //			resultIntent.putExtras(bundle);
+            EquipPDFFragment.mId = null;
+            EquipVideoFragment.mId = null;
 			this.setResult(ConstantCode.SCAN_RESULT_OK, resultIntent);
 			Log.i(TAG, "handleDecode: " + resultString);
 		}

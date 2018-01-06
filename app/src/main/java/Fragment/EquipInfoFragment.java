@@ -81,9 +81,17 @@ public class EquipInfoFragment extends Fragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(EquipmentResponse equipmentResponse){
         EquipmentData[] mData = equipmentResponse.getData();
-        mEquipmentData = mData;
-        int mCount = mData.length;
-        mInfoView.setText("点击查看详细" + mCount + "条设备信息");
+        Log.i(TAG, "onEvent: 设备信息event触发");
+        if (mData.length >= 1){
+            mEquipmentData = mData;
+            int mCount = mData.length;
+            mInfoView.setText("点击查看详细" + mCount + "条设备信息");
+        }
+        else {
+            mInfoView.setText("无相关信息，请联系后台管理员");
+            mEquipmentData = null;
+        }
+
     }
 
     @Override
@@ -95,7 +103,9 @@ public class EquipInfoFragment extends Fragment {
             int mCount = mEquipmentData.length;
             mInfoView.setText("点击查看详细" + mCount + "条设备信息");
         }
+        else {
+            mInfoView.setText("无相关信息，请联系后台管理员");
+        }
         return mLayout;
     }
-
 }

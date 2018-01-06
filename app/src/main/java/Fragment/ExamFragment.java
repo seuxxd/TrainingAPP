@@ -157,7 +157,6 @@ public class ExamFragment extends Fragment {
                     }
                     @Override
                     public void onNext(@NonNull ExamResponse examResponse) {
-                        Log.i(TAG, "onNext: " + examResponse.getResults());
                         Intent mExamIntent = new Intent(getActivity(), ExamActivity.class);
                         Bundle mBundle = new Bundle();
                         mBundle.putParcelable("exam",examResponse);
@@ -211,11 +210,12 @@ public class ExamFragment extends Fragment {
                     @Override
                     public void onNext(@NonNull ExamResponse examResponse) {
 //                        这个题目确定为5题，不会变更
-                        Log.i(TAG, "onNext: 特殊考试Next");
                         Intent mExamIntent = new Intent(getActivity(),ExamActivity.class);
                         Bundle mBundle = new Bundle();
+                        Log.i(TAG, "onNext: 特殊考试" + examResponse.getResults());
                         if (examResponse.getResults() != 5){
-                            Toast.makeText(getContext(), "今天没有考试", Toast.LENGTH_SHORT).show();
+                            Log.i(TAG, "onNext: 不等于5");
+                            Toast.makeText(getActivity(), "今天没有考试", Toast.LENGTH_SHORT).show();
                             return;
                         }
                         mBundle.putParcelable("exam",examResponse);
@@ -226,7 +226,6 @@ public class ExamFragment extends Fragment {
                                 .edit()
                                 .putInt("type",1)
                                 .apply();//自测类别
-                        Log.i(TAG, "onNext: " + getContext().getSharedPreferences("answer",Context.MODE_PRIVATE).getInt("type",5));
                         startActivity(mExamIntent);
                     }
 
@@ -237,7 +236,7 @@ public class ExamFragment extends Fragment {
 
                     @Override
                     public void onComplete() {
-
+                        Log.i(TAG, "onComplete: 特殊考试");
                     }
                 });
     }

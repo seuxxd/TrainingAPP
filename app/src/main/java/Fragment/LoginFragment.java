@@ -198,17 +198,6 @@ public class LoginFragment extends Fragment {
                         @Override
                         public void onSubscribe(@NonNull Disposable d) {
                             Log.i(TAG, "onSubscribe: " + "订阅成功");
-//                            无网络测试代码
-//                            Intent mIntent = new Intent(getActivity(), MainActivity.class);
-//                            String mPhoneNumber = "12312312312";
-//                            boolean mIsStore = mStoreInfo.isChecked();
-//                            mIntent.putExtra("username",mUsername);
-//                            mIntent.putExtra("password",mPassword);
-//                            mIntent.putExtra("phoneNumber",mPhoneNumber);
-//                            mIntent.putExtra("isStore",mIsStore);
-//                            Log.i(TAG, "onSubscribe: " + mIsStore);
-//                            startActivity(mIntent);
-//                            getActivity().finish();
                         }
 
                         @Override

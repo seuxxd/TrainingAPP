@@ -8,6 +8,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -184,13 +185,7 @@ public class EquipmentFragment extends Fragment {
 
                     @Override
                     public void onNext(@NonNull EquipmentResponse equipmentResponse) {
-                        boolean mSuccess = equipmentResponse.isSuccess();
-                        if (!mSuccess){
-                            Toast.makeText(getActivity(), "查询失败，请重试", Toast.LENGTH_SHORT).show();
-                        }
-                        else {
-                            EventBus.getDefault().post(equipmentResponse);
-                        }
+                        EventBus.getDefault().post(equipmentResponse);
                     }
 
                     @Override
@@ -206,43 +201,9 @@ public class EquipmentFragment extends Fragment {
     }
 
 
-    /**
-     * 
-     * @param unitid pdf info id
-     */
-    private void getPDFInfo(String unitid){
-        EquipPdfService mService = mRetorfit.create(EquipPdfService.class);
-        Observable<EquipPdfResponse> mObservable = mService.getPdfInfo(unitid);
-        mObservable
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<EquipPdfResponse>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-                        Log.i(TAG, "onSubscribe: 获取PDF信息订阅成功");
-                    }
-
-                    @Override
-                    public void onNext(@NonNull EquipPdfResponse equipPdfResponse) {
-                        if (equipPdfResponse.isSuccess()){
-                            EventBus.getDefault().post(equipPdfResponse);
-                        }
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
 
 
-    class InnerViewPagerAdapter extends FragmentPagerAdapter{
+    class InnerViewPagerAdapter extends FragmentStatePagerAdapter{
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             super.destroyItem(container, position, object);

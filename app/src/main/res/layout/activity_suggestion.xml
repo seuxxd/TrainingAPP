@@ -26,6 +26,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <android.support.design.widget.TextInputLayout
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:id="@+id/suggestion_abstract_input_layout"
         android:layout_below="@id/suggestion_abstract"
         android:layout_width="match_parent"
@@ -56,6 +58,8 @@
 
 
     <android.support.design.widget.TextInputLayout
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:id="@+id/suggestion_detail_input_layout"
         android:layout_below="@id/suggestion_detail"
         android:layout_width="match_parent"
@@ -77,6 +81,8 @@
         android:text="@string/submit_detail"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:background="@drawable/btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 </RelativeLayout>
