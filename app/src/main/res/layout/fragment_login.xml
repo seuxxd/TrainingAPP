@@ -49,6 +49,7 @@
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/login_username_layout"
+            app:errorTextAppearance="@style/login_error"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -63,7 +64,7 @@
 
     <!--密码框-->
     <LinearLayout
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="12dp"
         android:layout_gravity="center"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"

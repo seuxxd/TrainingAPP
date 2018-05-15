@@ -13,6 +13,8 @@
     <string name="login">登录账号</string>
     <string name="register">点击注册</string>
     <string name="scan_info_title">扫描设备二维码</string>
+    <string name="spinner_info_title">查询设备二维码</string>
+    <string name="spinner_submit">查询设备信息</string>
     <string name="initial_pwd">请输入原密码</string>
     <string name="first_change_pwd">请输入新密码</string>
     <string name="second_change_pwd">再输入一次确定</string>

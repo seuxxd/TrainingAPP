@@ -190,6 +190,10 @@ public class LoginFragment extends Fragment {
         final boolean mIsStore = mStoreInfo.isChecked();
         Log.i(TAG, "onLogin: mIsStore   " + mIsStore);
         Observable<LoginResponse> mObservable = mLoginService.doLogin(mUsername,mPassword);
+        /**
+         * 新添加的测试方法，删除了
+         */
+        //startActivity(new Intent(getContext(),MainActivity.class));
         if (checkLoginInput(mUsername,mPassword)) {
             mObservable
                     .subscribeOn(Schedulers.io())
@@ -236,7 +240,7 @@ public class LoginFragment extends Fragment {
                         @Override
                         public void onError(@NonNull Throwable e) {
                             Log.i(TAG, "onError: " + "错误" + e.toString());
-//                            Toast.makeText(getActivity(), "连接超时", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "连接超时", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -305,14 +309,16 @@ public class LoginFragment extends Fragment {
         if (TextUtils.isEmpty(username)){
             result = false;
             Log.i(TAG, "checkInput: username");
-            mUsernameLayout.setError("用户名不能为空");
             mUsernameLayout.setErrorEnabled(true);
+            mUsernameLayout.setError("用户名不能为空");
+            mUsernameLayout.setErrorTextAppearance(R.style.login_error);
         }
         if (TextUtils.isEmpty(password)){
             result = false;
             Log.i(TAG, "checkInput: password");
-            mPasswordLayout.setError("密码不能为空");
             mPasswordLayout.setErrorEnabled(true);
+            mPasswordLayout.setError("密码不能为空");
+            mPasswordLayout.setErrorTextAppearance(R.style.login_error);
         }
         if (!TextUtils.isEmpty(username)){
             mUsernameLayout.setErrorEnabled(false);

@@ -4,6 +4,9 @@ package Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -180,38 +183,40 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
      */
     private void getDayImage(){
 //        String url = "http://guolin.tech/api/bing_pic";
-        DayImageService mService = mRetrofit.create(DayImageService.class);
-        Observable<ResponseBody> mObservable = mService.getDayImage();
-        mObservable
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ResponseBody>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-                        Log.i(TAG, "onSubscribe: 图片订阅成功");
-                    }
-
-                    @Override
-                    public void onNext(@NonNull ResponseBody responseBody) {
-                        try {
-                            String mImageUrl = responseBody.string();
-                            Log.i(TAG, "onNext: " + mImageUrl);
-                            Glide.with(getContext()).load(mImageUrl).into(mDayImage);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
+//        DayImageService mService = mRetrofit.create(DayImageService.class);
+//        Observable<ResponseBody> mObservable = mService.getDayImage();
+//        mObservable
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Observer<ResponseBody>() {
+//                    @Override
+//                    public void onSubscribe(@NonNull Disposable d) {
+//                        Log.i(TAG, "onSubscribe: 图片订阅成功");
+//                    }
+//
+//                    @Override
+//                    public void onNext(@NonNull ResponseBody responseBody) {
+//                        try {
+//                            String mImageUrl = responseBody.string();
+//                            Log.i(TAG, "onNext: " + mImageUrl);
+//                            Glide.with(getContext()).load(mImageUrl).into(mDayImage);
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(@NonNull Throwable e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//
+//                    }
+//                });
+//        Bitmap mBitmap = BitmapFactory.decodeResource(getResources(),R.drawable.title);
+        Glide.with(getContext()).load(R.drawable.title).into(mDayImage);
 
     }
 
