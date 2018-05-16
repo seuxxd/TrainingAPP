@@ -162,9 +162,8 @@ public class EquipmentFragment extends Fragment {
     //第一个spinner的监听器
     @OnItemSelected(value = R.id.first_spinner,callback = OnItemSelected.Callback.ITEM_SELECTED)
     public void setFirstSpinner(int position){
-        if (!mFirstChooseSpinner){
+        if (position == 0)
             getSecondSpinnerContent();
-        }
 //            Toast.makeText(getContext(), "position: "  + mFirstContent[position], Toast.LENGTH_SHORT).show();
     }
     @OnItemSelected(value = R.id.first_spinner,callback = OnItemSelected.Callback.NOTHING_SELECTED)
@@ -193,6 +192,8 @@ public class EquipmentFragment extends Fragment {
                     public void onNext(Substations substations) {
                         int mResults = substations.getResults();
                         mSecondContent = new String[mResults];
+                        if (mResults <= 0)
+                            return;
                         mSubStationArray = substations.getRows();
                         for (int i = 0 ; i < mSubStationArray.length ; i ++){
                             mSecondContent[i] = mSubStationArray[i].getSubstationname();
@@ -249,6 +250,8 @@ public class EquipmentFragment extends Fragment {
                     @Override
                     public void onNext(VoltageGrades voltageGrades) {
                         int mResults = voltageGrades.getResults();
+                        if (mResults <= 0)
+                            return;
                         mThirdContent = new String[mResults];
                         mVoltageGradeArray = voltageGrades.getRows();
                         for (int i = 0 ; i < mResults ; i ++){
@@ -305,10 +308,13 @@ public class EquipmentFragment extends Fragment {
                     @Override
                     public void onNext(VSwitchs vSwitchs) {
                         int mResults = vSwitchs.getResults();
+                        if (mResults <= 0)
+                            return;
+                        mForthContent = new String[mResults];
                         mVSwitchArray = vSwitchs.getRows();
                         for (int i = 0 ; i < mResults ; i ++)
                             mForthContent[i] = mVSwitchArray[i].getSwitchname();
-                        ArrayAdapter<String> mAdapter = new ArrayAdapter<String>(
+                        ArrayAdapter<String> mAdapter = new ArrayAdapter<>(
                                 getContext(),
                                 android.R.layout.simple_spinner_item,
                                 mForthContent);
@@ -356,10 +362,23 @@ public class EquipmentFragment extends Fragment {
                     @Override
                     public void onNext(SubCircuits subCircuits) {
                         int mResults = subCircuits.getResults();
+                        if (mResults <= 0)
+                            return;
+                        Log.i(TAG, "onNext: " + mResults);
+                        mFifthContent = new String[mResults];
                         mSubCircuitArray = subCircuits.getRows();
                         for (int i = 0 ; i < mResults ; i ++)
-                            mFifthContent[i] = mSubCircuitArray[i].getSubcircuitname();
-                        ArrayAdapter<String> mAdapter = new ArrayAdapter<String>(
+                            mFifthContent[i] = mSubCircuitArray[i].getSubscircuitname();
+                        for (String s : mFifthContent){
+                            Log.i(TAG, "onNext: " + s);
+                            if (s == null){
+                                Log.i(TAG, "onNext: null");
+                                Toast.makeText(getContext(), "数据为空", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        }
+
+                        ArrayAdapter<String> mAdapter = new ArrayAdapter<>(
                                 getContext(),
                                 android.R.layout.simple_spinner_item,
                                 mFifthContent);
@@ -388,6 +407,7 @@ public class EquipmentFragment extends Fragment {
         try {
             int position = mFifthSpinner.getSelectedItemPosition();
             int mId = mSubCircuitArray[position].getSubscircuitid();
+            mEquipmentInfoText.setText(String.valueOf(mId));
             getEquipInfoNext(String.valueOf(mId));
         } catch (Exception e) {
             e.printStackTrace();
@@ -419,12 +439,12 @@ public class EquipmentFragment extends Fragment {
         View mEquipmentLayout = inflater.inflate(R.layout.fragment_equipment,container,false);
         ButterKnife.bind(this,mEquipmentLayout);
         mFirstContent = getResources().getStringArray(R.array.first_spinner);
-        ArrayAdapter<String> mFirstArrayAdapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> mFirstArrayAdapter = new ArrayAdapter<>(
                 getActivity(),
                 android.R.layout.simple_spinner_item,
                 mFirstContent);
         mFirstArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mFirstSpinner.setSelection(0,true);
+        mFirstSpinner.setSelection(1,true);
         mFirstSpinner.setAdapter(mFirstArrayAdapter);
         FragmentManager mFragmentManager = getChildFragmentManager();
         mViewPagerAdapter = new InnerViewPagerAdapter(mFragmentManager);

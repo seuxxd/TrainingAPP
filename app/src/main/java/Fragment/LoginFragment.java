@@ -62,7 +62,7 @@ public class LoginFragment extends Fragment {
     private static final String TAG = "LoginFragment";
 
     private OkHttpClient mClient = new OkHttpClient.Builder()
-            .connectTimeout(3 , TimeUnit.SECONDS)
+            .connectTimeout(8 , TimeUnit.SECONDS)
             .readTimeout(5 , TimeUnit.SECONDS)
             .writeTimeout(5 , TimeUnit.SECONDS)
             .build();

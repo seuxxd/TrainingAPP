@@ -10,7 +10,7 @@ public class SubCircuit {
     private String note;
     private String phone;
     private int subscircuitid;
-    private String subcircuitname;
+    private String subscircuitname;
     private int switchid;
 
     public String getContactname() {
@@ -53,12 +53,12 @@ public class SubCircuit {
         this.subscircuitid = subscircuitid;
     }
 
-    public String getSubcircuitname() {
-        return subcircuitname;
+    public String getSubscircuitname() {
+        return subscircuitname;
     }
 
-    public void setSubcircuitname(String subcircuitname) {
-        this.subcircuitname = subcircuitname;
+    public void setSubscircuitname(String subscircuitname) {
+        this.subscircuitname = subscircuitname;
     }
 
     public int getSwitchid() {
